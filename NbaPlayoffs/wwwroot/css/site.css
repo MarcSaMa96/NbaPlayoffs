@@ -1,0 +1,30 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.nba-nav {
+    background-color: #0253a4;
+    color: white !important;
+    font-weight: bold;
+}
+
+.mt-2round { margin-top: 5.5rem !important; }
+
+.mt-3round { margin-top: 7.5rem !important; }
+
+.mt-final { margin-top: 10em !important; }

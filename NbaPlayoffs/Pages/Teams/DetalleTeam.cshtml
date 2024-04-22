@@ -1,0 +1,9 @@
+﻿@page "{idTeam}"
+@model NbaPlayoffs.Pages.Teams.DetalleTeamModel
+
+<div class="text-center">
+    <h2 class="display-4">@ViewData["Title"]</h2>
+
+    @await Html.PartialAsync("_TeamPlayersPartial", Model.Team.Players)
+
+</div>

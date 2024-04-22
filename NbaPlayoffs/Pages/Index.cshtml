@@ -1,0 +1,32 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Classification";
+    
+}
+
+<div class="text-center">
+    <h2 class="display-4">@ViewData["Title"]</h2>
+
+    <select id="selectedYearSelect" class="form-control" asp-for="SelectedYear" asp-items="Model.AvailableYears"></select>
+
+    <div class="row mt-5" id="contenedorClasificacion">
+       @await Html.PartialAsync("Clasification/_ClasificacionPartial", Model.Clasificacion)
+    </div>
+
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#selectedYearSelect").change(function() {
+            var seleccionado = $(this).val();
+            $.ajax({
+                url: "/Index?handler=ActualizarClasificacion&year=" + seleccionado,
+                type: "GET",
+                success: function (result) {
+                    $("#contenedorClasificacion").html(result);
+                }
+            });
+        });
+    });
+</script>                            

@@ -1,0 +1,42 @@
+﻿@using NbaPlayoffs.Services.DTOs;
+@model Dictionary<string, List<ClasificacionDto>>
+
+@foreach (var conference in Model.Keys)
+{
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                @conference
+            </div>
+            <div class="card-body">
+                <table class="table text-start">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Team</th>
+                            <th class="text-center">Wins</th>
+                            <th class="text-center">Losses</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var team in Model[conference].OrderBy(x => x.Position))
+                        {
+                            <tr>
+                                <th class="align-middle">@team.Position</th>
+                                <th>
+                                    <a href="Teams/DetalleTeam/@team.TeamId?year=2024" class="nav-link">
+                                        <div class="d-flex align-items-center">
+                                            <img src="@(string.IsNullOrEmpty(team.TeamImageSrc) ? "" : team.TeamImageSrc)" width="30"><span class="m-2">@team.TeamName</span>
+                                        </div>
+                                    </a>
+                                </th>
+                                <th class="align-middle text-center">@team.Wins</th>
+                                <th class="align-middle text-center">@team.Losses</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}

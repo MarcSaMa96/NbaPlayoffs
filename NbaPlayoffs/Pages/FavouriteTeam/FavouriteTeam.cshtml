@@ -1,0 +1,80 @@
+﻿@page "/FavTeam"
+@model NbaPlayoffs.Pages.FavouriteTeam.FavouriteTeamModel
+@{
+     ViewData["Title"] = "Favourite Team";
+}
+
+@await Html.PartialAsync("_ModalPartial")
+
+<div class="container mt-5">
+    <h1 class="text-center mb-5">@ViewData["Title"]</h1>
+
+    <form method="post" id="form">
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="text" class="form-control" id="Email" name="Form.Email" asp-for="Form.Email">
+            <span asp-validation-for="Form.Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mt-5">
+            <label for="Selector">Team: </label>
+            <select class="form-control" id="team" name="Form.IdTeam" asp-for="Form.IdTeam">
+                <option value="0"></option>
+                @foreach (var team in Model.TeamsOptions.OrderBy(x => x.Name))
+                {
+                    <option value="@(team.IdTeam)">@team.Name</option>
+                }
+            </select>
+            <span asp-validation-for="Form.IdTeam" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('form').submit(function (e) {
+                e.preventDefault();
+                $(".field-validation-error").text('')
+                    fetch("/FavTeam", {
+                        method: "POST",
+                        body: new FormData(this)
+                    })
+                    .then(response => {
+                        if(response.ok || response.status == 200){
+                            return response.json();
+                        }
+                        else{
+                            response.text().then(html => {
+                                // Reemplazamos el html actual por el recibido por el servidor
+                               document.open();
+                               document.write(html);
+                               document.close();
+                            });
+                        }
+                    })
+                    .then(data => {
+                        if (data.Success) {
+                            $('#header').text('Success!');
+                            $('#message').text(data.Message);
+                            $('#messageModal').modal('show');
+                        }
+                        else {
+                            $('#header').text('Error!');
+                            $('#message').text(data.Message);
+                            $('#messageModal').modal('show');
+                        }
+                    })
+                    .catch(error => {
+                        console.log("Error en el envío del formulario", error);
+                    });
+            });
+        });
+    </script>
+}
+   

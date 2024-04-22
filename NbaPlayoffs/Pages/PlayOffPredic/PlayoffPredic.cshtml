@@ -1,0 +1,252 @@
+﻿@page "/PlayoffPredic"
+@model NbaPlayoffs.Pages.PlayoffPredicModel
+@{
+    ViewData["Title"] = "PlayOff Prediction";
+}
+
+@await Html.PartialAsync("_ModalPartial")
+<div class="container mt-5">
+    <h1 class="text-center mb-5">@ViewData["Title"]</h1>
+
+    @if(Model.ConferenciaEste != null && Model.ConferenciaOeste != null)
+    {
+        <form id="playoffForm" method="post">
+            <div class="row">
+                <div class="col-5">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="@(Model.ConferenciaEste[0]?.TeamName)" readonly />
+                                <input type="text" class="form-control" value="@(Model.ConferenciaEste[1]?.TeamName)" readonly />
+                            </div>
+                            <div class="form-group mt-4">
+                                <input type="text" class="form-control" value="@(Model.ConferenciaEste[2]?.TeamName)" readonly />
+                                <input type="text" class="form-control" value="@(Model.ConferenciaEste[3]?.TeamName)" readonly />
+                            </div>
+                            <div class="form-group mt-4">
+                                <input type="text" class="form-control" value="@(Model.ConferenciaEste[4]?.TeamName)" readonly />
+                                <input type="text" class="form-control" value="@(Model.ConferenciaEste[5]?.TeamName)" readonly />
+                            </div>
+                            <div class="form-group mt-4">
+                                <input type="text" class="form-control" value="@(Model.ConferenciaEste[6]?.TeamName)" readonly />
+                                <input type="text" class="form-control" value="@(Model.ConferenciaEste[7]?.TeamName)" readonly />
+                            </div>
+                        </div>
+
+                        <div class="col-4 mt-2round">
+                            <div class="form-group">
+                                <select class="form-control" id="este-2round-bracket0" name="este-2round-bracket0" data-bracketgroup="@(Model.ConferenciaEste[0]?.BracketGroup)">
+                                    <option></option>
+                                    <option value="@(Model.ConferenciaEste[0]?.TeamRecordId)">@(Model.ConferenciaEste[0]?.TeamName)</option>
+                                    <option value="@(Model.ConferenciaEste[1]?.TeamRecordId)">@(Model.ConferenciaEste[1]?.TeamName)</option>
+                                </select>
+
+                                <select class="form-control" id="este-2round-bracket1" name="este-2round-bracket1" data-bracketGroup="@(Model.ConferenciaEste[0]?.BracketGroup)">
+                                    <option></option>
+                                    <option value="@(Model.ConferenciaEste[2]?.TeamRecordId)">@(Model.ConferenciaEste[2]?.TeamName)</option>
+                                    <option value="@(Model.ConferenciaEste[3]?.TeamRecordId)">@(Model.ConferenciaEste[3]?.TeamName)</option>
+                                </select>
+                            </div>
+                            <div class="form-group mt-5">
+                                <select class="form-control" id="este-2round-bracket2" name="este-2round-bracket2" data-bracketGroup="@(Model.ConferenciaEste[4]?.BracketGroup)">
+                                    <option></option>
+                                    <option value="@(Model.ConferenciaEste[4]?.TeamRecordId)">@(Model.ConferenciaEste[4]?.TeamName)</option>
+                                    <option value="@(Model.ConferenciaEste[5]?.TeamRecordId)">@(Model.ConferenciaEste[5]?.TeamName)</option>
+                                </select>
+
+                                <select class="form-control" id="este-2round-bracket3" name="este-2round-bracket3" data-bracketGroup="@(Model.ConferenciaEste[4]?.BracketGroup)">
+                                    <option></option>
+                                    <option value="@(Model.ConferenciaEste[6]?.TeamRecordId)">@(Model.ConferenciaEste[6]?.TeamName)</option>
+                                    <option value="@(Model.ConferenciaEste[7]?.TeamRecordId)">@(Model.ConferenciaEste[7]?.TeamName)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-4 mt-3round">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="winner_east" id="winner_east1" disabled>
+                                    <label class="form-check-label" for="winner_east1">
+                                        Winner
+                                    </label>
+                                </div>
+                                <select class="form-control" id="este-3round-bracket0" name="este-3round-bracket0" data-bracketGroup="@(Model.ConferenciaEste[0]?.BracketGroup)" disabled>
+                                    <option></option>
+                                </select>
+
+                                <select class="form-control" id="este-3round-bracket1" name="este-3round-bracket1" data-bracketGroup="@(Model.ConferenciaEste[4]?.BracketGroup)" disabled>
+                                    <option></option>
+                                </select>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="winner_east" id="winner_east2" disabled>
+                                    <label class="form-check-label" for="winner_east2">
+                                        Winner
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               <div class="col-2">
+                    <div class="row">
+                        <div class="col-12 mt-final">
+                            <div class="form-group">
+                                <select class="form-control" id="final-nba" name="final-nba" disabled>
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-5">
+                    <div class="row">
+                        <div class="col-4 mt-3round">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="winner_west" id="winner_west1" disabled>
+                                    <label class="form-check-label" for="winner_west1">
+                                        Winner
+                                    </label>
+                                </div>
+                                <select class="form-control" id="oeste-3round-bracket0" name="oeste-3round-bracket0" data-bracketGroup="@(Model.ConferenciaOeste[0]?.BracketGroup)" disabled>
+                                    <option></option>
+                                </select>
+
+                                <select class="form-control" id="oeste-3round-bracket1" name="oeste-3round-bracket1" data-bracketGroup="@(Model.ConferenciaOeste[4]?.BracketGroup)" disabled>
+                                    <option></option>
+                                </select>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="winner_west" id="winner_west2" disabled>
+                                    <label class="form-check-label" for="winner_west2">
+                                        Winner
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4 mt-2round">
+                            <div class="form-group">
+                                <select class="form-control" id="oeste-2round-bracket0" name="oeste-2round-bracket0" data-bracketgroup="@(Model.ConferenciaOeste[0]?.BracketGroup)">
+                                    <option></option>
+                                    <option value="@(Model.ConferenciaOeste[0]?.TeamRecordId)">@(Model.ConferenciaOeste[0]?.TeamName)</option>
+                                    <option value="@(Model.ConferenciaOeste[1]?.TeamRecordId)">@(Model.ConferenciaOeste[1]?.TeamName)</option>
+                                </select>
+                                <select class="form-control" id="oeste-2round-bracket1" name="oeste-2round-bracket1" data-bracketgroup="@(Model.ConferenciaOeste[0]?.BracketGroup)">
+                                    <option></option>
+                                    <option value="@(Model.ConferenciaOeste[2]?.TeamRecordId)">@(Model.ConferenciaOeste[2]?.TeamName)</option>
+                                    <option value="@(Model.ConferenciaOeste[3]?.TeamRecordId)">@(Model.ConferenciaOeste[3]?.TeamName)</option>
+                                </select>
+                            </div>
+                            <div class="form-group mt-5">
+                                <select class="form-control" id="oeste-2round-bracket2" name="oeste-2round-bracket2" data-bracketgroup="@(Model.ConferenciaOeste[4]?.BracketGroup)">
+                                    <option></option>
+                                    <option value="@(Model.ConferenciaOeste[4]?.TeamRecordId)">@(Model.ConferenciaOeste[4]?.TeamName)</option>
+                                    <option value="@(Model.ConferenciaOeste[5]?.TeamRecordId)">@(Model.ConferenciaOeste[5]?.TeamName)</option>
+                                </select>
+
+                                <select class="form-control" id="oeste-2round-bracket3" name="oeste-2round-bracket3" data-bracketgroup="@(Model.ConferenciaOeste[4]?.BracketGroup)">
+                                    <option></option>
+                                    <option value="@(Model.ConferenciaOeste[6]?.TeamRecordId)">@(Model.ConferenciaOeste[6]?.TeamName)</option>
+                                    <option value="@(Model.ConferenciaOeste[7]?.TeamRecordId)">@(Model.ConferenciaOeste[7]?.TeamName)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="@(Model.ConferenciaOeste[0]?.TeamName)" readonly />
+                                <input type="text" class="form-control" value="@(Model.ConferenciaOeste[1]?.TeamName)" readonly />
+                            </div>
+                            <div class="form-group mt-4">
+                                <input type="text" class="form-control" value="@(Model.ConferenciaOeste[2]?.TeamName)" readonly />
+                                <input type="text" class="form-control" value="@(Model.ConferenciaOeste[3]?.TeamName)" readonly />
+                            </div>
+                            <div class="form-group mt-4">
+                                <input type="text" class="form-control" value="@(Model.ConferenciaOeste[4]?.TeamName)" readonly />
+                                <input type="text" class="form-control" value="@(Model.ConferenciaOeste[5]?.TeamName)" readonly />
+                            </div>
+                            <div class="form-group mt-4">
+                                <input type="text" class="form-control" value="@(Model.ConferenciaOeste[6]?.TeamName)" readonly />
+                                <input type="text" class="form-control" value="@(Model.ConferenciaOeste[7]?.TeamName)" readonly />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <input type="hidden" id="datos" name="datos" />
+
+            <div class="row mt-4">
+                <label for="user-email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="user-email" name="user-email" />
+                <input type="submit" class="form-control" value="Send" />
+            </div>
+
+
+        </form>
+    }
+    
+
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/js/playoffBracket.js"></script>
+    <script src="~/js/playoffBracketValidations.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var conferenciaEste = @Html.Raw(Json.Serialize(Model.ConferenciaEste));
+            var conferenciaOeste = @Html.Raw(Json.Serialize(Model.ConferenciaOeste));
+
+            initializeValidations(conferenciaEste, conferenciaOeste);
+            addListeners(conferenciaEste, conferenciaOeste);
+
+            $("#playoffForm").submit(function(event){
+                event.preventDefault();
+
+                var isValid = $(this).valid();
+
+
+                if(isValid){
+                     var datos = {
+                        'Email': $("#user-email").val(),
+                        'Teams': conferenciaEste.concat(conferenciaOeste)
+                    };
+
+                    var datosJson = JSON.stringify(datos);
+                    $('#datos').val(datosJson);
+                    var formData = new FormData(this);
+
+                    fetch("/PlayoffPredic", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        if(data.Success){
+                            $('#header').text('Success!');
+                            $('#message').text(data.Message);
+                            $('#messageModal').modal('show');
+                        }
+                        else{
+                            $('#header').text('Error!');
+                            $('#message').text(data.Message);
+                            $('#messageModal').modal('show');
+                        }
+                    })
+                    .catch(error => {
+                        console.log("Error en el envío del formulario", error);
+                    });
+                }
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,31 @@
+﻿@using NbaPlayoffs.Services.DTOs;
+@model List<PlayerDto>
+
+<div class="row mt-5">
+    <h3>Players</h3>
+    <table class="table text-start">
+        <thead>
+            <tr>
+                <th>Position</th>
+                <th>Name</th>
+                <th class="text-center">Points</th>
+                <th class="text-center">Rebounds</th>
+                <th class="text-center">Points x Game</th>
+                <th class="text-center">Rebounds x Game</th>
+                <th class="text-center">Games Played</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var player in Model)
+            {
+                <th>@player.PositionCode</th>
+                <th>@player.Name</th>
+                <th class="text-center">@player.Points</th>
+                <th class="text-center">@player.Rebounds</th>
+                <th class="text-center">@player.PointsPerGame.ToString("0.00")</th>
+                <th class="text-center">@player.ReboundsPerGame.ToString("0.00")</th>
+                <th class ="text-center">@player.GamesPlayed</th>
+            }
+        </tbody>
+    </table>
+</div>
